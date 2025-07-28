@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<!-- saved from url=(0174)https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/60c7f23b8ba4b8c3d8c809047296d9e5/8e5522f5-f2b0-4a08-bbc7-b9249ddfe0f9/index.html?utm_source=perplexity -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Financing Calculator</title>
+    <link rel="stylesheet" href="./Home Financing Calculator_files/style.css">
+    <script src="./Home Financing Calculator_files/chart.js"></script>
+</head>
+<body>
+    <div class="calculator-layout">
+        <!-- Left Sidebar - FIXED 450px width -->
+        <div class="inputs-section">
+            <div class="section-header">
+                <h2>Input Parameters</h2>
+                <button class="btn btn--secondary btn--sm" id="resetBtn">Reset to Defaults</button>
+            </div>
+
+            <!-- Property Details -->
+            <div class="input-group">
+                <h3>Property Details</h3>
+                <div class="form-group">
+                    <label class="form-label" for="homePrice">Home Purchase Price</label>
+                    <input type="number" id="homePrice" class="form-control currency-input" value="1850000" step="1000" min="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="closingCosts">Closing Costs (%)</label>
+                    <input type="number" id="closingCosts" class="form-control percent-input" value="2.3" step="0.1" min="0" max="10">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="propertyTax">Property Tax Rate (%)</label>
+                    <input type="number" id="propertyTax" class="form-control percent-input" value="1.26" step="0.01" min="0" max="5">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="insurance">Annual Insurance ($)</label>
+                    <input type="number" id="insurance" class="form-control currency-input" value="24000" step="1000" min="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="maintenance">Maintenance (% of home value)</label>
+                    <input type="number" id="maintenance" class="form-control percent-input" value="1.5" step="0.1" min="0" max="5">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="appreciation">Home Appreciation (% per year)</label>
+                    <input type="number" id="appreciation" class="form-control percent-input" value="3.0" step="0.1" min="0" max="15">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="holdingPeriod">Holding Period (years)</label>
+                    <input type="number" id="holdingPeriod" class="form-control" value="10" step="1" min="1" max="30">
+                </div>
+            </div>
+
+            <!-- Financing Parameters -->
+            <div class="input-group">
+                <h3>Financing Parameters</h3>
+                <div class="form-group">
+                    <label class="form-label" for="mortgageRate">Mortgage Rate (%)</label>
+                    <input type="number" id="mortgageRate" class="form-control percent-input" value="6.9" step="0.1" min="0" max="15">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="deductionLimit">Mortgage Deduction Limit ($)</label>
+                    <input type="number" id="deductionLimit" class="form-control currency-input" value="750000" step="1000" min="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="sofrRate">SOFR Rate (%)</label>
+                    <input type="number" id="sofrRate" class="form-control percent-input" value="4.33" step="0.01" min="0" max="10">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="boxSpreadRate">Box Spread Rate (% - calculated as SOFR + 0.5%)</label>
+                    <input type="number" id="boxSpreadRate" class="form-control percent-input calculated-field" value="4.83" readonly="">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="securitiesRate">Securities Loan Rate (% - calculated as SOFR + 1.0%)</label>
+                    <input type="number" id="securitiesRate" class="form-control percent-input calculated-field" value="5.33" readonly="">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="securitiesLtv">Securities LTV Ratio (%)</label>
+                    <input type="number" id="securitiesLtv" class="form-control percent-input" value="40" step="1" min="10" max="80">
+                </div>
+            </div>
+
+            <!-- Alternative Investment Assumptions -->
+            <div class="input-group">
+                <h3>Alternative Investment Assumptions</h3>
+                <div class="form-group">
+                    <label class="form-label" for="investReturn">Base Portfolio Return (%)</label>
+                    <input type="number" id="investReturn" class="form-control percent-input" value="7.0" step="0.1" min="0" max="20">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="altReturnPe">Private Equity Return (%)</label>
+                    <input type="number" id="altReturnPe" class="form-control percent-input" value="8.9" step="0.1" min="0" max="25">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="altReturnHf">Hedge Fund Return (%)</label>
+                    <input type="number" id="altReturnHf" class="form-control percent-input" value="8.0" step="0.1" min="0" max="25">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="altReturnCredit">Private Credit Return (%)</label>
+                    <input type="number" id="altReturnCredit" class="form-control percent-input" value="10.0" step="0.1" min="0" max="25">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="altReturnRe">Real Estate Return (%)</label>
+                    <input type="number" id="altReturnRe" class="form-control percent-input" value="9.5" step="0.1" min="0" max="25">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="altWeightPe">PE Allocation (%)</label>
+                    <input type="number" id="altWeightPe" class="form-control percent-input" value="30" step="1" min="0" max="100">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="altWeightHf">HF Allocation (%)</label>
+                    <input type="number" id="altWeightHf" class="form-control percent-input" value="25" step="1" min="0" max="100">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="altWeightCredit">Credit Allocation (%)</label>
+                    <input type="number" id="altWeightCredit" class="form-control percent-input" value="25" step="1" min="0" max="100">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="altWeightRe">RE Allocation (%)</label>
+                    <input type="number" id="altWeightRe" class="form-control percent-input" value="20" step="1" min="0" max="100">
+                </div>
+            </div>
+
+            <!-- Tax & Market Assumptions -->
+            <div class="input-group">
+                <h3>Tax &amp; Market Assumptions</h3>
+                <div class="form-group">
+                    <label class="form-label" for="taxOrdinary">Ordinary Tax Rate (%)</label>
+                    <input type="number" id="taxOrdinary" class="form-control percent-input" value="37.0" step="0.1" min="0" max="50">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="taxCapitalGains">Capital Gains Tax Rate (%)</label>
+                    <input type="number" id="taxCapitalGains" class="form-control percent-input" value="23.8" step="0.1" min="0" max="50">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="sellingCost">Selling Cost (%)</label>
+                    <input type="number" id="sellingCost" class="form-control percent-input" value="7.0" step="0.1" min="0" max="15">
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area - flex: 1 to fill remaining space -->
+        <div class="results-section">
+            <div class="section-header">
+                <h2>Scenario Comparison Results</h2>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="results-table-section">
+                <h3>Detailed Scenario Comparison</h3>
+                <div class="table-container">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Scenario</th>
+                                <th>Down Payment</th>
+                                <th>Upfront Cost</th>
+                                <th>Annual Debt Service</th>
+                                <th>10-Year Interest Cost</th>
+                                <th>Portfolio Growth</th>
+                                <th>Home Sale Proceeds</th>
+                                <th>Total Net Worth</th>
+                                <th>Net vs All-Cash</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparisonTableBody"><tr class="scenario-row-0">
+                <td class="scenario-name">All Cash</td>
+                <td class="currency-cell">$1,850,000</td>
+                <td class="currency-cell">$1,892,550</td>
+                <td class="currency-cell">$0</td>
+                <td class="currency-cell">$0</td>
+                <td class="currency-cell">$0</td>
+                <td class="currency-cell">$2,312,208</td>
+                <td class="currency-cell">$1,561,608</td>
+                <td class="currency-cell ">$0</td>
+            </tr><tr class="scenario-row-1">
+                <td class="scenario-name">80% Mortgage</td>
+                <td class="currency-cell">$370,000</td>
+                <td class="currency-cell">$412,550</td>
+                <td class="currency-cell">$205,294</td>
+                <td class="currency-cell">$572,945</td>
+                <td class="currency-cell">$1,390,232</td>
+                <td class="currency-cell">$2,312,208</td>
+                <td class="currency-cell">$2,474,632</td>
+                <td class="currency-cell positive-value">$913,024</td>
+            </tr><tr class="scenario-row-2 best-scenario">
+                <td class="scenario-name">$750K Mtg + Box Spread</td>
+                <td class="currency-cell">$370,000</td>
+                <td class="currency-cell">$412,550</td>
+                <td class="currency-cell">$139,293</td>
+                <td class="currency-cell">$642,934</td>
+                <td class="currency-cell">$1,390,232</td>
+                <td class="currency-cell">$2,312,208</td>
+                <td class="currency-cell">$2,493,078</td>
+                <td class="currency-cell positive-value">$931,470</td>
+            </tr><tr class="scenario-row-3 worst-scenario">
+                <td class="scenario-name">Securities Loan</td>
+                <td class="currency-cell">$0</td>
+                <td class="currency-cell">$42,550</td>
+                <td class="currency-cell">$155,474</td>
+                <td class="currency-cell">$1,554,740</td>
+                <td class="currency-cell">$0</td>
+                <td class="currency-cell">$2,312,208</td>
+                <td class="currency-cell">$298,739</td>
+                <td class="currency-cell negative-value">-$1,262,869</td>
+            </tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Enhanced Opportunity Cost Display -->
+            <div class="opportunity-cost-section">
+                <h3>Securities Loan True Cost Analysis</h3>
+                <div class="card">
+                    <div class="card__body">
+                        <div id="opportunityCostBreakdown">
+        <div class="cost-breakdown">
+            <div class="cost-item">
+                <div class="cost-item-label">Securities Loan Interest</div>
+                <div class="cost-item-value">$788,840</div>
+                <div class="cost-item-annual">$78,884/year</div>
+            </div>
+            <div class="cost-item">
+                <div class="cost-item-label">Opportunity Cost</div>
+                <div class="cost-item-value">$765,900</div>
+                <div class="cost-item-annual">$76,590/year</div>
+            </div>
+            <div class="cost-item total-cost-highlight">
+                <div class="cost-item-label">Total True Cost</div>
+                <div class="cost-item-value">$1,554,740</div>
+                <div class="cost-item-annual">$0/year</div>
+            </div>
+            <div class="cost-item">
+                <div class="cost-item-label">Pledged Securities Required</div>
+                <div class="cost-item-value">$3,700,000</div>
+                <div class="cost-item-annual">At 40.00% LTV</div>
+            </div>
+        </div>
+        
+        <div class="blended-return-info">
+            <div class="blended-return-title">Alternative Investment Portfolio Composition</div>
+            <div class="return-breakdown">
+                <div class="return-item">
+                    <span>Private Equity (30.00%):</span>
+                    <span>8.90%</span>
+                </div>
+                <div class="return-item">
+                    <span>Hedge Funds (25.00%):</span>
+                    <span>8.00%</span>
+                </div>
+                <div class="return-item">
+                    <span>Private Credit (25.00%):</span>
+                    <span>10.00%</span>
+                </div>
+                <div class="return-item">
+                    <span>Real Estate (20.00%):</span>
+                    <span>9.50%</span>
+                </div>
+            </div>
+            <div class="blended-result">
+                <strong>Blended Alternative Return: 9.07%</strong><br>
+                <span style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">
+                    vs Standard Portfolio: 7.00% 
+                    (Opportunity Cost: 2.07%)
+                </span>
+            </div>
+        </div>
+        
+        <div class="securities-analysis">
+            <div class="securities-analysis-title">Securities Loan Reality Check</div>
+            <p style="text-align: center; margin-bottom: var(--space-16); color: var(--color-text-secondary);">
+                The true cost of securities loans is significantly higher when opportunity costs are included
+            </p>
+            <div class="analysis-comparison">
+                <div class="analysis-item">
+                    <div class="analysis-label">Apparent Annual Cost</div>
+                    <div class="analysis-value apparent-cost">$78,884</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-label">True Annual Cost</div>
+                    <div class="analysis-value true-cost">$0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart Section -->
+            <div class="chart-section">
+                <h3>Net Worth Comparison After 10 Years</h3>
+                <div class="chart-container" style="position: relative; height: 400px;">
+                    <canvas id="comparisonChart" width="944" height="366" style="display: block; box-sizing: border-box; height: 366px; width: 944px;"></canvas>
+                </div>
+            </div>
+
+            <!-- Summary Section -->
+            <div class="summary-section">
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Optimal Scenario</h3>
+                        <div id="optimalScenario" class="optimal-result">
+        <div class="optimal-scenario-name">$750K Mtg + Box Spread</div>
+        <div class="optimal-details">Mortgage up to deduction limit plus synthetic box spread</div>
+        <div style="margin-top: var(--space-12);">
+            <strong>Total Net Worth:</strong> <span class="optimal-value">$2,493,078</span>
+        </div>
+        <div style="margin-top: var(--space-8);">
+            <strong>Advantage over All-Cash:</strong> <span class="optimal-value positive-value">$931,470</span>
+        </div>
+    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./Home Financing Calculator_files/app.js"></script>
+
+</body></html>
